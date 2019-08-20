@@ -15,8 +15,7 @@ lock = threading.Lock()
 print("[#] MediumBot")
 story = input("[#] Story Link: ")
 threads = int(input("[#] Threads (Recommended 5): "))
-
-def main():
+def steve():
     try:
         options = webdriver.ChromeOptions()
         options.add_argument("start-maximized")
@@ -50,7 +49,9 @@ def main():
             driver.get(email_link["href"])
             element1 = WebDriverWait(driver, 800).until(
                 EC.presence_of_element_located((By.XPATH, "//button[@data-action='submit-registration']")))
+            lock.acquire()
             driver.find_element_by_xpath("//button[@data-action='submit-registration']").click()
+            lock.release()
             element0 = WebDriverWait(driver, 800).until(
                 EC.presence_of_element_located((By.XPATH, "//button[@title='Follow True Crime']")))
             driver.find_element_by_xpath("//button[@title='Follow True Crime']").click()
@@ -59,11 +60,15 @@ def main():
             driver.find_element_by_xpath("//button[@data-action='onboarding-next']").click()
             time.sleep(3.5)
             driver.find_element_by_xpath('//*[@id="root"]/div/article/div/section/div/div/div[2]/div/div[2]/div/div/span/div/div').click()
+            driver.execute_script('window.scrollBy(0,200)')
+            time.sleep(1)
+            driver.find_element_by_xpath('//*[@id="root"]/div/div[4]/div/div[1]/div/div[1]/div/button').click()
+            sys.stdout.write(f"\r[#] Clapped...")
             driver.delete_all_cookies()
     except Exception as e:
         print(e)
         time.sleep(20000)
 
 for i in range(threads):
-    t = threading.Thread(target=main)
+    t = threading.Thread(target=steve)
     t.start()
