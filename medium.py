@@ -3,6 +3,7 @@ import time, threading
 import datetime, random, sys
 from selenium import webdriver
 from selenium import webdriver
+from requests.exceptions import ConnectionError
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -22,7 +23,7 @@ def steve():
         options.add_argument("disable-infobars")
         options.add_experimental_option("useAutomationExtension", False)
         options.add_experimental_option("excludeSwitches", ["enable-automation"])
-        driver = webdriver.Chrome(executable_path='chromedriver.exe', options=options)
+        driver = webdriver.Chrome(executable_path='C:/Users/ddm50/Pictures/chromedriver.exe', options=options)
         while 3 > 1:
             running = ["[#] Running...", "[#] Running.", "[#] Running..", "[#] Running.....", "[#] Running......", "[#] Running...."]
             sys.stdout.write(f"\r{random.choice(running)}")
@@ -63,8 +64,9 @@ def steve():
             driver.execute_script('window.scrollBy(0,200)')
             time.sleep(1)
             driver.find_element_by_xpath('//*[@id="root"]/div/div[4]/div/div[1]/div/div[1]/div/button').click()
-            sys.stdout.write(f"\r[#] Clapped...")
             driver.delete_all_cookies()
+    except ConnectionError:
+        pass
     except Exception as e:
         print(e)
         time.sleep(20000)
