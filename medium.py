@@ -23,7 +23,7 @@ def steve():
         options.add_argument("disable-infobars")
         options.add_experimental_option("useAutomationExtension", False)
         options.add_experimental_option("excludeSwitches", ["enable-automation"])
-        driver = webdriver.Chrome(executable_path='C:/Users/ddm50/Pictures/chromedriver.exe', options=options)
+        driver = webdriver.Chrome(executable_path='chromedriver.exe', options=options)
         while 3 > 1:
             running = ["[#] Running...", "[#] Running.", "[#] Running..", "[#] Running.....", "[#] Running......", "[#] Running...."]
             sys.stdout.write(f"\r{random.choice(running)}")
